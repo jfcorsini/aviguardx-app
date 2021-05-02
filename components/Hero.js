@@ -20,7 +20,7 @@ function getEntries(data) {
 
 export default function Hero(props) {
   const { data, errorMessage } = useEntries();
-  const { status, ts } = useStatus();
+  const statusResponse = useStatus();
   const [entries, setEntries] = useState([]);
   const [twitterHandle, setTwitterHandle] = useState("");
   const [story, setStory] = useState("");

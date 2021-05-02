@@ -81,11 +81,26 @@ export const useStatus = () => {
       }),
     }
   );
+  if (!data) {
+    return {
+      loading: true,
+    };
+  }
+
+  if (error) {
+    return {
+      error,
+    };
+  }
+
   const result = data.data.status;
 
   return {
-    status: result.status,
-    ts: new Date(result._ts),
+    loading: false,
+    data: {
+      status: result.status,
+      ts: new Date(result._ts),
+    },
   };
 };
 
