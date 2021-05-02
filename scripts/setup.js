@@ -60,6 +60,14 @@ readline.question(`Please provide the FaunaDB admin key\n`, (adminKey) => {
                 resource: q.Index("entries"),
                 actions: { read: true },
               },
+              {
+                resource: q.Collection("Status"),
+                actions: { read: true, write: true, create: true },
+              },
+              {
+                resource: q.Index("status"),
+                actions: { read: true },
+              },
             ],
           })
         )
