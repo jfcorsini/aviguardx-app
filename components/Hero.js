@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useEntries, createGuestbookEntry } from "../graphql/api";
+import { useEntries, useStatus } from "../graphql/api";
 import Header from "./Header";
 import GuestbookEntry from "./GuestbookEntry";
 import GuestbookEntryDivider from "./GuestbookEntryDivider";
@@ -20,10 +20,10 @@ function getEntries(data) {
 
 export default function Hero(props) {
   const { data, errorMessage } = useEntries();
+  const { status, ts } = useStatus();
   const [entries, setEntries] = useState([]);
   const [twitterHandle, setTwitterHandle] = useState("");
   const [story, setStory] = useState("");
-  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (!entries.length) {
@@ -41,20 +41,6 @@ export default function Hero(props) {
       alert("No favorite memory? This cannot be!");
       return;
     }
-    setSubmitting(true);
-    createGuestbookEntry(twitterHandle, story)
-      .then((data) => {
-        entries.unshift(data.data.createGuestbookEntry);
-        setTwitterHandle("");
-        setStory("");
-        setEntries(entries);
-        setSubmitting(false);
-      })
-      .catch((error) => {
-        console.log(`boo :( ${error}`);
-        alert("🤷‍♀️");
-        setSubmitting(false);
-      });
   }
 
   function handleStoryChange(event) {
@@ -70,10 +56,7 @@ export default function Hero(props) {
       <div className={hero.className}>
         <Header />
         <form className={heroForm.className} onSubmit={handleSubmit}>
-          <fieldset
-            className={heroFormFieldset.className}
-            disabled={submitting && "disabled"}
-          >
+          <fieldset className={heroFormFieldset.className}>
             <textarea
               className={heroFormTextArea.className}
               rows="5"

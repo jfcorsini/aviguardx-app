@@ -60,31 +60,61 @@ export const useEntries = () => {
   };
 };
 
+export const useStatus = () => {
+  const query = `query Status {
+    status {
+      status
+      _ts
+    }
+  }`;
+  const { data, error } = useFetch(
+    process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
+        "Content-type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        query,
+      }),
+    }
+  );
+  const result = data.data.status;
+
+  return {
+    status: result.status,
+    ts: new Date(result._ts),
+  };
+};
+
 /**
 |--------------------------------------------------
-| This GraphQL mutation creates a new GuestbookEntry
-| with the requisite twitter handle and story arguments.
-|
-| It returns the stored data and includes the unique
-| identifier (_id) as well as _ts (time created).
-|
-| The guestbook uses the _id value as the unique key
-| and the _ts value to sort and display the date of
-| publication.
+| This GraphQL mutation creates a new Entry
 |
 | Learn more about GraphQL mutations: https://graphql.org/learn/queries/#mutations
 |--------------------------------------------------
 */
-export const createGuestbookEntry = async (twitterHandle, story) => {
-  const query = `mutation CreateGuestbookEntry($twitterHandle: String!, $story: String!) {
-    createGuestbookEntry(data: {
-      twitter_handle: $twitterHandle,
-      story: $story
+export const createEntry = async (inputData) => {
+  const query = `mutation createEntry($mapUrl: String!, $trackedUrl: String!, $predictedUrl: String!, $name: String!, $recordedAt: Time!, $jsonData: String!) {
+    createEntry(data: {
+      map_url: $mapUrl,
+      tracked_url: $trackedUrl,
+      predicted_url: $predictedUrl,
+      name: $name,
+      recorded_at: $recordedAt,
+      jsonData: $jsonData
     }) {
       _id
       _ts
-      twitter_handle
-      story
+      name
+      map_url
+      tracked_url
+      predicted_url
+      name
+      recorded_at
+      jsonData
     }
   }`;
 
@@ -97,7 +127,49 @@ export const createGuestbookEntry = async (twitterHandle, story) => {
     },
     body: JSON.stringify({
       query,
-      variables: { twitterHandle, story },
+      variables: inputData,
+    }),
+  });
+  const data = await res.json();
+
+  return data;
+};
+
+/**
+|--------------------------------------------------
+| This GraphQL mutation updates an Entry
+|
+| Learn more about GraphQL mutations: https://graphql.org/learn/queries/#mutations
+|--------------------------------------------------
+*/
+export const updateEntry = async (id, name, jsonData) => {
+  const query = `mutation updateEntry(id: $id, $name: String!, $jsonData: String!) {
+    updateEntry(id: $id, data: {
+      name: $name,
+      jsonData: $jsonData
+    }) {
+      _id
+      _ts
+      name
+      map_url
+      tracked_url
+      predicted_url
+      name
+      recorded_at
+      jsonData
+    }
+  }`;
+
+  const res = await fetch(process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
+      "Content-type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables: data,
     }),
   });
   const data = await res.json();
