@@ -15,21 +15,23 @@ function getErrorMessage(error, data) {
 
 /**
 |--------------------------------------------------
-| This GraphQL query returns an array of Guestbook
-| entries complete with both the provided and implicit
-| data attributes.
+| This GraphQL query returns an array of Entries
 |
 | Learn more about GraphQL: https://graphql.org/learn/
 |--------------------------------------------------
 */
-export const useGuestbookEntries = () => {
+export const useEntries = () => {
   const query = `query Entries($size: Int) {
     entries(_size: $size) {
       data {
         _id
         _ts
-        twitter_handle
-        story
+        name
+        map_url
+        predicted_url
+        tracked_url
+        jsonData
+        recorded_at
       }
       after
     }

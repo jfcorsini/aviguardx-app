@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useGuestbookEntries, createGuestbookEntry } from "../graphql/api";
+import { useEntries, createGuestbookEntry } from "../graphql/api";
 import Header from "./Header";
 import GuestbookEntry from "./GuestbookEntry";
 import GuestbookEntryDivider from "./GuestbookEntryDivider";
@@ -19,7 +19,7 @@ function getEntries(data) {
 }
 
 export default function Hero(props) {
-  const { data, errorMessage } = useGuestbookEntries();
+  const { data, errorMessage } = useEntries();
   const [entries, setEntries] = useState([]);
   const [twitterHandle, setTwitterHandle] = useState("");
   const [story, setStory] = useState("");
