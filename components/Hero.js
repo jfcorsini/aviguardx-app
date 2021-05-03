@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useEntries, useStatus } from "../graphql/api";
 import Header from "./Header";
-import GuestbookEntry from "./GuestbookEntry";
 import Sidebar from "./Sidebar";
-import GuestbookEntryDivider from "./GuestbookEntryDivider";
+import SelectedEntry from "./SelectedEntry";
 import {
   hero,
   heroContainer,
@@ -23,12 +22,15 @@ export default function Hero(props) {
   const { data, errorMessage } = useEntries();
   const statusResponse = useStatus();
   const [entries, setEntries] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState(null);
   const [twitterHandle, setTwitterHandle] = useState("");
   const [story, setStory] = useState("");
 
   useEffect(() => {
     if (!entries.length) {
-      setEntries(getEntries(data));
+      const allEntries = getEntries(data);
+      setEntries(allEntries);
+      setSelectedEntry(allEntries[0]);
     }
   }, [data, entries.length]);
 
@@ -82,7 +84,13 @@ export default function Hero(props) {
           </fieldset>
         </form>
       </div>
-      <Sidebar entries={entries} errorMessage={errorMessage} />
+      {selectedEntry && <SelectedEntry entry={selectedEntry} />}
+      <Sidebar
+        entries={entries}
+        errorMessage={errorMessage}
+        selectedEntry={selectedEntry}
+        setSelectedEntry={setSelectedEntry}
+      />
       {heroEntries.styles}
       {heroFormSubmitButton.styles}
       {heroFormTwitterInput.styles}

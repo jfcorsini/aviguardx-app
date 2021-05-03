@@ -12,15 +12,15 @@ import {
 } from "../styles/guestbookentry";
 
 export default function GuestbookEntry(props) {
-  const { map_url, name } = props;
-  const date = new Date(props._ts / 1000);
+  const { map_url, name } = props.entry;
+  const date = new Date(props.entry._ts / 1000);
 
   return (
     <>
       <div className={guestbookEntry.className}>
         <div className={guestbookEntryUserDetail.className}>
           <div className={guestbookEntryUserDetailAvatar.className}>
-            <a href={`#`}>
+            <a href={"#"} onClick={() => props.setSelectedEntry(props.entry)}>
               <img
                 className={guestbookEntryUserDetailAvatarImg.className}
                 src={map_url}

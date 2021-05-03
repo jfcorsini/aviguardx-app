@@ -16,7 +16,10 @@ export default function Sidebar(props) {
           entries.map((entry, index, allEntries) => {
             return (
               <div key={entry._id}>
-                <GuestbookEntry {...entry} />
+                <GuestbookEntry
+                  entry={entry}
+                  setSelectedEntry={props.setSelectedEntry}
+                />
                 {index < allEntries.length - 1 && <GuestbookEntryDivider />}
               </div>
             );
