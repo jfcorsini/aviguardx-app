@@ -15,7 +15,7 @@ import {
 } from "../styles/hero";
 
 function getEntries(data) {
-  return data ? data.entries.data.reverse() : [];
+  return data ? data.entries.data : [];
 }
 
 export default function Hero(props) {
@@ -88,14 +88,9 @@ export default function Hero(props) {
           <p>Loading entries...</p>
         ) : (
           entries.map((entry, index, allEntries) => {
-            const date = new Date(entry._ts / 1000);
             return (
               <div key={entry._id}>
-                <GuestbookEntry
-                  twitter_handle={entry.twitter_handle}
-                  story={entry.story}
-                  date={date}
-                />
+                <GuestbookEntry {...entry} />
                 {index < allEntries.length - 1 && <GuestbookEntryDivider />}
               </div>
             );

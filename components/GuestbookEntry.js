@@ -4,7 +4,6 @@ import {
   guestbookEntryUserDetailAvatar,
   guestbookEntryUserDetailAvatarImg,
   guestbookEntryUserDetailTimestamp,
-  guestbookEntryUserDetailBiolink,
   guestbookEntryStory,
   guestbookEntryShare,
   guestbookEntryShareTwitterButton,
@@ -13,57 +12,28 @@ import {
 } from "../styles/guestbookentry";
 
 export default function GuestbookEntry(props) {
+  const { map_url, name } = props;
+  const date = new Date(props._ts / 1000);
+
   return (
     <>
       <div className={guestbookEntry.className}>
         <div className={guestbookEntryUserDetail.className}>
           <div className={guestbookEntryUserDetailAvatar.className}>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://twitter.com/${props.twitter_handle}/`}
-            >
+            <a href={`#`}>
               <img
                 className={guestbookEntryUserDetailAvatarImg.className}
-                src={`https://twitter-avatar.vercel.app/${props.twitter_handle}/`}
+                src={map_url}
               />
             </a>
           </div>
-          <a
-            className={guestbookEntryUserDetailBiolink.className}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={`https://twitter.com/${props.twitter_handle}/`}
-          >
-            {props.twitter_handle}
-          </a>
+        </div>
+        <div className={guestbookEntryStory.className}>
+          {name}
           <span className={guestbookEntryUserDetailTimestamp.className}>
-            {props.date.toDateString()}
+            {date.toUTCString()}
           </span>
         </div>
-        <div className={guestbookEntryStory.className}>{props.story}</div>
-      </div>
-      <div className={guestbookEntryShare.className}>
-        <a
-          href={`http://twitter.com/share?text=${encodeURIComponent(
-            props.story + " @faunadb @zeithq"
-          )}&url=${encodeURIComponent(
-            "https://fauna.com"
-          )}&hashtags=graphql,nextjs
-                    `}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={guestbookEntryShareTwitterButton.className}
-        >
-          <img
-            src="/static/twitter_icon_black.png"
-            className={guestbookEntryShareTwitterButtonLogo1.className}
-          />
-          <img
-            className={guestbookEntryShareTwitterButtonLogo2.className}
-            src="/static/twitter_icon_blue.png"
-          />
-        </a>
       </div>
       {guestbookEntry.styles}
       {guestbookEntryShare.styles}
@@ -74,7 +44,6 @@ export default function GuestbookEntry(props) {
       {guestbookEntryUserDetail.styles}
       {guestbookEntryUserDetailAvatar.styles}
       {guestbookEntryUserDetailAvatarImg.styles}
-      {guestbookEntryUserDetailBiolink.styles}
       {guestbookEntryUserDetailTimestamp.styles}
     </>
   );
