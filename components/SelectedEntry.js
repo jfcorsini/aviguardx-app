@@ -10,7 +10,7 @@ import {
 } from "../styles/hero";
 
 export default function SelectedEntry(props) {
-  const { entry } = props;
+  const { entry, imageUrl } = props;
   const jsonData = JSON.parse(entry.jsonData);
   const [name, setName] = useState(entry.name);
   const [comments, setComments] = useState(jsonData.comments || "");
@@ -56,7 +56,7 @@ export default function SelectedEntry(props) {
 
   return (
     <div className={entryContainer.className}>
-      <img className={entryImg.className} src={entry.map_url} />
+      <img className={entryImg.className} src={imageUrl} />
       <form className={heroForm.className} onSubmit={handleSubmit}>
         <fieldset className={heroFormFieldset.className}>
           <label>Comments </label>

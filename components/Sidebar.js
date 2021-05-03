@@ -3,7 +3,7 @@ import Divider from "./Divider";
 import { hero, heroContainer, heroEntries } from "../styles/hero";
 
 export default function Sidebar(props) {
-  const { entries, errorMessage } = props;
+  const { entries, errorMessage, imageKey } = props;
 
   return (
     <div className={heroContainer.className}>
@@ -18,6 +18,7 @@ export default function Sidebar(props) {
               <div key={entry._id}>
                 <ItemEntry
                   entry={entry}
+                  imageUrl={entry[imageKey]}
                   setSelectedEntry={props.setSelectedEntry}
                 />
                 {index < allEntries.length - 1 && <Divider />}
