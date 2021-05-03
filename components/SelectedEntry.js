@@ -75,7 +75,7 @@ export default function SelectedEntry(props) {
           <input
             className={heroFormSubmitButton.className}
             type="submit"
-            value="Submit"
+            value="Update"
           />
         </fieldset>
       </form>

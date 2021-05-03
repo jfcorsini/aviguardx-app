@@ -60,48 +60,27 @@ export const useEntries = () => {
   };
 };
 
-export const useStatus = () => {
+export const fetchStatus = async () => {
   const query = `query Status {
     status {
       status
       _ts
     }
   }`;
-  const { data, error } = useFetch(
-    process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
-        "Content-type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        query,
-      }),
-    }
-  );
-  if (!data) {
-    return {
-      loading: true,
-    };
-  }
-
-  if (error) {
-    return {
-      error,
-    };
-  }
-
-  const result = data.data.status;
-
-  return {
-    loading: false,
-    data: {
-      status: result.status,
-      ts: new Date(result._ts),
+  const res = await fetch(process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
+      "Content-type": "application/json",
+      Accept: "application/json",
     },
-  };
+    body: JSON.stringify({
+      query,
+    }),
+  });
+  const data = await res.json();
+
+  return data;
 };
 
 /**

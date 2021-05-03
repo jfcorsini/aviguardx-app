@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useEntries, useStatus } from "../graphql/api";
+import { useEntries, fetchStatus } from "../graphql/api";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import SelectedEntry from "./SelectedEntry";
@@ -20,7 +20,7 @@ function getEntries(data) {
 
 export default function Hero(props) {
   const { data, errorMessage } = useEntries();
-  const statusResponse = useStatus();
+  const [status, setStatus] = useState({ status: "CONNECTING" });
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState(null);
 
@@ -32,9 +32,20 @@ export default function Hero(props) {
     }
   }, [data, entries.length]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchStatus()
+        .then((result) => {
+          setStatus(result.data.status);
+        })
+        .catch((error) => setStatus({ error }));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [fetchStatus]);
+
   return (
     <div className={heroContainer.className}>
-      <Header />
+      <Header status={status} />
       {selectedEntry && <SelectedEntry entry={selectedEntry} />}
       <Sidebar
         entries={entries}
