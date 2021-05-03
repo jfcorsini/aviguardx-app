@@ -18,6 +18,25 @@ function getEntries(data) {
   return data ? data.entries.data.reverse() : [];
 }
 
+const imageKeyOptions = [
+  {
+    key: "map_url",
+    value: "Map",
+  },
+  {
+    key: "predicted_url",
+    value: "Predicted",
+  },
+  {
+    key: "tracked_url",
+    value: "Tracked Image",
+  },
+  {
+    key: "simple_tracked_url",
+    value: "Simple",
+  },
+];
+
 export default function Hero(props) {
   const { data, errorMessage } = useEntries();
   const [status, setStatus] = useState({ status: "CONNECTING" });
@@ -44,11 +63,6 @@ export default function Hero(props) {
     return () => clearInterval(interval);
   }, [fetchStatus]);
 
-  const onChangeRadio = (e) => {
-    e.preventDefault();
-    setImageKey(e.target.value);
-  };
-
   return (
     <div className={heroContainer.className}>
       <Header status={status} />
@@ -58,40 +72,20 @@ export default function Hero(props) {
           imageUrl={selectedEntry[imageKey]}
         />
       )}
-      <div onChange={onChangeRadio}>
-        <input
-          type="radio"
-          value="map_url"
-          name="imageKey"
-          checked={imageKey === "map_url"}
-        />{" "}
-        Map
-        <br />
-        <input
-          type="radio"
-          value="predicted_url"
-          checked={imageKey === "predicted_url"}
-          name="imageKey"
-        />{" "}
-        Predicted
-        <br />
-        <input
-          type="radio"
-          value="tracked_url"
-          checked={imageKey === "tracked_url"}
-          name="imageKey"
-        />{" "}
-        Tracked Image
-        <br />
-        <input
-          type="radio"
-          value="simple_predicted_url"
-          checked={imageKey === "simple_predicted_url"}
-          name="imageKey"
-        />{" "}
-        Simple
-        <br />
-      </div>
+      {imageKeyOptions.map(({ key, value }) => (
+        <div key={key}>
+          <input
+            key={key}
+            type="radio"
+            value={key}
+            name="imageKey"
+            onChange={(e) => setImageKey(e.target.value)}
+            checked={imageKey === key}
+          />
+          {value}
+          <br />
+        </div>
+      ))}
       <Sidebar
         entries={entries}
         errorMessage={errorMessage}
