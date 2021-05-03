@@ -60,7 +60,7 @@ export const heroFormTextArea = css.resolve`
 export const heroFormTwitterInput = css.resolve`
   input {
     display: inline-block;
-    width: 45%;
+    width: 40%;
     padding: 5px;
     border-radius: 5px;
     border: 1.2px solid rgba(50, 63, 203, 0.5);

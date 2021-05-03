@@ -157,10 +157,15 @@ export const createEntry = async (inputData) => {
 | Learn more about GraphQL mutations: https://graphql.org/learn/queries/#mutations
 |--------------------------------------------------
 */
-export const updateEntry = async (id, name, jsonData) => {
-  const query = `mutation updateEntry(id: $id, $name: String!, $jsonData: String!) {
+export const updateEntry = async (currentEntry, newEntryState) => {
+  const { _id, _ts, ...entry } = currentEntry;
+  const query = `mutation updateEntry($id: ID!, $map_url: String!, $tracked_url: String!, $predicted_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
     updateEntry(id: $id, data: {
+      map_url: $map_url,
+      tracked_url: $tracked_url,
+      predicted_url: $predicted_url,
       name: $name,
+      recorded_at: $recorded_at,
       jsonData: $jsonData
     }) {
       _id
@@ -184,7 +189,11 @@ export const updateEntry = async (id, name, jsonData) => {
     },
     body: JSON.stringify({
       query,
-      variables: data,
+      variables: {
+        id: _id,
+        ...entry,
+        ...newEntryState,
+      },
     }),
   });
   const data = await res.json();

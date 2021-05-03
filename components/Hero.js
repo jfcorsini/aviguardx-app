@@ -23,8 +23,6 @@ export default function Hero(props) {
   const statusResponse = useStatus();
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState(null);
-  const [twitterHandle, setTwitterHandle] = useState("");
-  const [story, setStory] = useState("");
 
   useEffect(() => {
     if (!entries.length) {
@@ -34,56 +32,9 @@ export default function Hero(props) {
     }
   }, [data, entries.length]);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    if (twitterHandle.trim().length === 0) {
-      alert("Please provide a valid twitter handle :)");
-      return;
-    }
-    if (story.trim().length === 0) {
-      alert("No favorite memory? This cannot be!");
-      return;
-    }
-  }
-
-  function handleStoryChange(event) {
-    setStory(event.target.value);
-  }
-
-  function handleTwitterChange(event) {
-    setTwitterHandle(event.target.value.replace("@", ""));
-  }
-
   return (
     <div className={heroContainer.className}>
-      <div className={hero.className}>
-        <Header />
-        <form className={heroForm.className} onSubmit={handleSubmit}>
-          <fieldset className={heroFormFieldset.className}>
-            <textarea
-              className={heroFormTextArea.className}
-              rows="5"
-              cols="50"
-              name="story"
-              placeholder="What is your favorite memory as a developer?"
-              onChange={handleStoryChange}
-              value={story}
-            />
-            <input
-              className={heroFormTwitterInput.className}
-              type="text"
-              placeholder="twitter handle (no '@')"
-              onChange={handleTwitterChange}
-              value={twitterHandle}
-            />
-            <input
-              className={heroFormSubmitButton.className}
-              type="submit"
-              value="Submit"
-            />
-          </fieldset>
-        </form>
-      </div>
+      <Header />
       {selectedEntry && <SelectedEntry entry={selectedEntry} />}
       <Sidebar
         entries={entries}
