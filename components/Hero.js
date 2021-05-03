@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useEntries, useStatus } from "../graphql/api";
 import Header from "./Header";
 import GuestbookEntry from "./GuestbookEntry";
+import Sidebar from "./Sidebar";
 import GuestbookEntryDivider from "./GuestbookEntryDivider";
 import {
   hero,
@@ -81,22 +82,7 @@ export default function Hero(props) {
           </fieldset>
         </form>
       </div>
-      <div className={heroEntries.className}>
-        {errorMessage ? (
-          <p>{errorMessage}</p>
-        ) : !data ? (
-          <p>Loading entries...</p>
-        ) : (
-          entries.map((entry, index, allEntries) => {
-            return (
-              <div key={entry._id}>
-                <GuestbookEntry {...entry} />
-                {index < allEntries.length - 1 && <GuestbookEntryDivider />}
-              </div>
-            );
-          })
-        )}
-      </div>
+      <Sidebar entries={entries} errorMessage={errorMessage} />
       {heroEntries.styles}
       {heroFormSubmitButton.styles}
       {heroFormTwitterInput.styles}
