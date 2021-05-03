@@ -18,19 +18,27 @@ export default function SelectedEntry(props) {
   function handleSubmit(event) {
     event.preventDefault();
     if (name.trim().length === 0) {
-      alert("Please provide a valid twitter handle :)");
+      alert("Name cannot be empty");
       return;
     }
+    let newComments = comments;
     if (comments.trim().length === 0) {
-      alert("No favorite memory? This cannot be!");
-      return;
+      newComments = "";
     }
 
     const newJsonData = JSON.stringify({
       ...jsonData,
-      comments,
+      comments: newComments,
     });
-    updateEntry(entry, { name, jsonData: newJsonData });
+    updateEntry(entry, { name, jsonData: newJsonData })
+      .then((newData) => {
+        console.log("Updated data", newData.data.updateEntry);
+        location.reload();
+      })
+      .catch((error) => {
+        console.error("Failed to update entry", error);
+        alert("Failed to update");
+      });
   }
 
   function handleCommentsChange(event) {
