@@ -11,7 +11,7 @@ import {
   guestbookEntryShareTwitterButtonLogo2,
 } from "../styles/guestbookentry";
 
-export default function GuestbookEntry(props) {
+export default function ItemEntry(props) {
   const { map_url, name } = props.entry;
   const date = new Date(props.entry._ts / 1000);
 

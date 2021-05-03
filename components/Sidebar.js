@@ -1,5 +1,5 @@
-import GuestbookEntry from "./GuestbookEntry";
-import GuestbookEntryDivider from "./GuestbookEntryDivider";
+import ItemEntry from "./ItemEntry";
+import Divider from "./Divider";
 import { hero, heroContainer, heroEntries } from "../styles/hero";
 
 export default function Sidebar(props) {
@@ -16,11 +16,11 @@ export default function Sidebar(props) {
           entries.map((entry, index, allEntries) => {
             return (
               <div key={entry._id}>
-                <GuestbookEntry
+                <ItemEntry
                   entry={entry}
                   setSelectedEntry={props.setSelectedEntry}
                 />
-                {index < allEntries.length - 1 && <GuestbookEntryDivider />}
+                {index < allEntries.length - 1 && <Divider />}
               </div>
             );
           })
