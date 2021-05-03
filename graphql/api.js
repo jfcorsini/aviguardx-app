@@ -112,13 +112,13 @@ export const useStatus = () => {
 |--------------------------------------------------
 */
 export const createEntry = async (inputData) => {
-  const query = `mutation createEntry($mapUrl: String!, $trackedUrl: String!, $predictedUrl: String!, $name: String!, $recordedAt: Time!, $jsonData: String!) {
+  const query = `mutation createEntry($map_url: String!, $tracked_url: String!, $predicted_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
     createEntry(data: {
-      map_url: $mapUrl,
-      tracked_url: $trackedUrl,
-      predicted_url: $predictedUrl,
+      map_url: $map_url,
+      tracked_url: $tracked_url,
+      predicted_url: $predicted_url,
       name: $name,
-      recorded_at: $recordedAt,
+      recorded_at: $recorded_at,
       jsonData: $jsonData
     }) {
       _id
