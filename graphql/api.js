@@ -179,3 +179,33 @@ export const updateEntry = async (currentEntry, newEntryState) => {
 
   return data;
 };
+
+/**
+ * This method updates the status of the computer. Currently we just
+ * have one status so I hardcoded the id to make life easier.
+ */
+export const updateStatus = async (status) => {
+  const query = `mutation updateStatus($id: ID!, $status: ProductStatus!) {
+    updateStatus(id: $id, data: {status: $status}) {
+      _id
+      _ts
+      status
+    }
+  }`;
+
+  const res = await fetch(process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
+      "Content-type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables: { id: "297491077492900359", status },
+    }),
+  });
+  const data = await res.json();
+
+  return data;
+};
