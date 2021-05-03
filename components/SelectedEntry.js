@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { updateEntry } from "../graphql/api";
 import { entryContainer, entryImg } from "../styles/entry";
 import {
@@ -14,6 +14,11 @@ export default function SelectedEntry(props) {
   const jsonData = JSON.parse(entry.jsonData);
   const [name, setName] = useState(entry.name);
   const [comments, setComments] = useState(jsonData.comments || "");
+
+  useEffect(() => {
+    setName(entry.name);
+    setComments(jsonData.comments || "");
+  }, [entry]);
 
   function handleSubmit(event) {
     event.preventDefault();
