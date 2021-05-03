@@ -21,7 +21,7 @@ export default function ItemEntry(props) {
       <div className={guestbookEntry.className}>
         <div className={guestbookEntryUserDetail.className}>
           <div className={guestbookEntryUserDetailAvatar.className}>
-            <a href={"#"} onClick={() => props.setSelectedEntry(props.entry)}>
+            <a onClick={() => props.setSelectedEntry(props.entry)}>
               <img
                 className={guestbookEntryUserDetailAvatarImg.className}
                 src={imageUrl}
