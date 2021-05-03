@@ -15,7 +15,7 @@ import {
 } from "../styles/hero";
 
 function getEntries(data) {
-  return data ? data.entries.data : [];
+  return data ? data.entries.data.reverse() : [];
 }
 
 export default function Hero(props) {
