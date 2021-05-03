@@ -2,6 +2,7 @@ type Entry {
   map_url: String!
   tracked_url: String!
   predicted_url: String!
+  simple_tracked_url: String!
   name: String!
   recorded_at: Time!
   jsonData: String! # A stringified JSON

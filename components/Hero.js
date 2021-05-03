@@ -85,8 +85,8 @@ export default function Hero(props) {
         <br />
         <input
           type="radio"
-          value="simple_track"
-          checked={imageKey === "simple_track"}
+          value="simple_predicted_url"
+          checked={imageKey === "simple_predicted_url"}
           name="imageKey"
         />{" "}
         Simple

@@ -29,6 +29,7 @@ export const useEntries = () => {
         name
         map_url
         predicted_url
+        simple_tracked_url
         tracked_url
         jsonData
         recorded_at
@@ -91,11 +92,12 @@ export const fetchStatus = async () => {
 |--------------------------------------------------
 */
 export const createEntry = async (inputData) => {
-  const query = `mutation createEntry($map_url: String!, $tracked_url: String!, $predicted_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
+  const query = `mutation createEntry($map_url: String!, $tracked_url: String!, $predicted_url: String!, $simple_tracked_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
     createEntry(data: {
       map_url: $map_url,
       tracked_url: $tracked_url,
       predicted_url: $predicted_url,
+      simple_tracked_url: $simple_tracked_url,
       name: $name,
       recorded_at: $recorded_at,
       jsonData: $jsonData
@@ -106,6 +108,7 @@ export const createEntry = async (inputData) => {
       map_url
       tracked_url
       predicted_url
+      simple_tracked_url
       name
       recorded_at
       jsonData
@@ -138,11 +141,12 @@ export const createEntry = async (inputData) => {
 */
 export const updateEntry = async (currentEntry, newEntryState) => {
   const { _id, _ts, ...entry } = currentEntry;
-  const query = `mutation updateEntry($id: ID!, $map_url: String!, $tracked_url: String!, $predicted_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
+  const query = `mutation updateEntry($id: ID!, $map_url: String!, $tracked_url: String!, $predicted_url: String!, $simple_tracked_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
     updateEntry(id: $id, data: {
       map_url: $map_url,
       tracked_url: $tracked_url,
       predicted_url: $predicted_url,
+      simple_tracked_url: $simple_tracked_url,
       name: $name,
       recorded_at: $recorded_at,
       jsonData: $jsonData
@@ -153,6 +157,7 @@ export const updateEntry = async (currentEntry, newEntryState) => {
       map_url
       tracked_url
       predicted_url
+      simple_tracked_url
       name
       recorded_at
       jsonData
