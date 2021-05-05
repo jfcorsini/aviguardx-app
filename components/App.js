@@ -37,7 +37,7 @@ const imageKeyOptions = [
   },
 ];
 
-export default function Hero(props) {
+export default function App(props) {
   const { data, errorMessage } = useEntries();
   const [status, setStatus] = useState({ status: "CONNECTING" });
   const [entries, setEntries] = useState([]);

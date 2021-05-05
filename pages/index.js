@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Hero from "../components/Hero";
+import App from "../components/App";
 
 const Guestbook = (props) => {
   return (
@@ -19,9 +19,7 @@ const Guestbook = (props) => {
           padding: 0px;
         }
       `}</style>
-      <div>
-        <Hero />
-      </div>
+      <App />
       <style jsx>{`
         div {
           display: flex;
