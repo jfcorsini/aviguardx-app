@@ -1,13 +1,14 @@
 import ItemEntry from "./ItemEntry";
 import Divider from "./Divider";
-import { hero, heroContainer, heroEntries } from "../styles/hero";
+import { hero, sidebarContainer, heroEntries } from "../styles/hero";
 
 export default function Sidebar(props) {
   const { entries, errorMessage, imageKey } = props;
 
   return (
-    <div className={heroContainer.className}>
+    <div className={sidebarContainer.className}>
       <div className={heroEntries.className}>
+        <h3>Latest Entries</h3>
         {errorMessage ? (
           <p>{errorMessage}</p>
         ) : !entries ? (
@@ -28,7 +29,7 @@ export default function Sidebar(props) {
         )}
       </div>
       {heroEntries.styles}
-      {heroContainer.styles}
+      {sidebarContainer.styles}
       {hero.styles}
     </div>
   );

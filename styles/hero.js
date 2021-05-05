@@ -1,12 +1,17 @@
 import css from "styled-jsx/css";
 
-export const heroContainer = css.resolve`
+export const appContainer = css.resolve`
   div {
-    width: 100%;
-    min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+  }
+`;
+
+export const sidebarContainer = css.resolve`
+  div {
+    flex: 1;
+    overflow-y: scroll;
+    height: 100vh;
+    margin: 10px 0;
   }
 `;
 
@@ -48,7 +53,7 @@ export const heroFormTextArea = css.resolve`
     border: 1.2px solid rgba(50, 63, 203, 0.5);
     transition: border 200ms ease-in-out;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: "Calibri";
   }
 
   textarea:hover,
@@ -78,7 +83,7 @@ export const heroFormSubmitButton = css.resolve`
     width: 45%;
     border-radius: 5px;
     padding: 5px;
-    float: right;
+    float: left;
     background-color: rgba(50, 63, 203);
     color: white;
     font-weight: bold;

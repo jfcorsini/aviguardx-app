@@ -1,4 +1,6 @@
-import { headerTitle } from "../styles/header";
+import { useState, useEffect } from "react";
+import { fetchStatus } from "../graphql/api";
+import { headerTitle, headerSubTitle } from "../styles/header";
 
 function loadStatus(status) {
   switch (status) {
@@ -22,22 +24,38 @@ function loadStatus(status) {
 const DIFF_MS = 10 * 60 * 1000; // 10 minutes
 
 export default function Header(props) {
-  let status = props.status;
+  const [status, setStatus] = useState({ status: "CONNECTING" });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchStatus()
+        .then((result) => {
+          setStatus(result.data.status);
+        })
+        .catch((error) => setStatus({ error }));
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [fetchStatus]);
+  let readableStatus;
+
   // Offline if last update is too old
   if (new Date(status._ts / 1000) < new Date(Date.now() - DIFF_MS)) {
-    status = "OFFLINE";
+    readableStatus = "OFFLINE";
   } else if (status.error) {
-    status = "ERROR";
+    readableStatus = "ERROR";
     console.error("Error in status", status.error);
   } else {
-    status = status.status;
+    readableStatus = status.status;
   }
 
   return (
-    <>
+    <div>
       <h1 className={headerTitle.className}>AviGuardX</h1>
-      <p>Status: {loadStatus(status)}</p>
+      <p className={headerTitle.headerSubTitle}>
+        Status: {loadStatus(readableStatus)}
+      </p>
+      {headerSubTitle.styles}
       {headerTitle.styles}
-    </>
+    </div>
   );
 }

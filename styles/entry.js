@@ -13,6 +13,7 @@ export const entryContainer = css.resolve`
 
 export const entryImg = css.resolve`
   img {
-    height: 550px;
+    height: 700px;
+    border: 2px solid rgba(50, 63, 203, 0.5);
   }
 `;

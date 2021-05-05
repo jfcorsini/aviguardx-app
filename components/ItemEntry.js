@@ -16,12 +16,17 @@ export default function ItemEntry(props) {
   const { name } = entry;
   const date = new Date(props.entry._ts / 1000);
 
+  const handleEntryClick = (e) => {
+    e.preventDefault();
+    props.setSelectedEntry(props.entry);
+  };
+
   return (
     <>
       <div className={guestbookEntry.className}>
         <div className={guestbookEntryUserDetail.className}>
           <div className={guestbookEntryUserDetailAvatar.className}>
-            <a onClick={() => props.setSelectedEntry(props.entry)}>
+            <a href={"#"} onClick={handleEntryClick}>
               <img
                 className={guestbookEntryUserDetailAvatarImg.className}
                 src={imageUrl}

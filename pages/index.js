@@ -12,24 +12,19 @@ const Guestbook = (props) => {
           type="image/x-icon"
           href="/static/favicon.png"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <style jsx global>{`
         body {
           margin: 0px;
           padding: 0px;
+          font-family: "Verdana";
         }
       `}</style>
       <App />
-      <style jsx>{`
-        div {
-          display: flex;
-          margin-left: auto;
-          margin-right: auto;
-          font-family: sans-serif, sans;
-          flex-direction: column;
-          align-items: center;
-        }
-      `}</style>
     </>
   );
 };

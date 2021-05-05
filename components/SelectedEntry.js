@@ -55,12 +55,21 @@ export default function SelectedEntry(props) {
   }
 
   return (
-    <div className={entryContainer.className}>
+    <div>
       <img className={entryImg.className} src={imageUrl} />
       <form className={heroForm.className} onSubmit={handleSubmit}>
         <fieldset className={heroFormFieldset.className}>
-          <label>Comments </label>
+          <label>Entry name </label>
           <br />
+          <input
+            className={heroFormTwitterInput.className}
+            type="text"
+            onChange={handleNameChange}
+            value={name}
+          />
+          <br />
+          <br />
+          <label>Comments </label>
           <textarea
             className={heroFormTextArea.className}
             rows="5"
@@ -69,13 +78,6 @@ export default function SelectedEntry(props) {
             placeholder="Add details about this entry"
             onChange={handleCommentsChange}
             value={comments}
-          />
-          <label>Entry name </label>
-          <input
-            className={heroFormTwitterInput.className}
-            type="text"
-            onChange={handleNameChange}
-            value={name}
           />
           <input
             className={heroFormSubmitButton.className}
