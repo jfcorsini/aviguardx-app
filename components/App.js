@@ -13,11 +13,14 @@ export default function App(props) {
   const [imageKey, setImageKey] = useState("map_url");
   const [selectedEntry, setSelectedEntry] = useState(null);
 
-  const updateEntries = useCallback(() => {
+  const updateEntries = useCallback((updateSelected = false) => {
     fetchEntries()
       .then((result) => {
         const allEntries = result.data.entries.data.reverse();
         setEntries(allEntries);
+        if (updateSelected) {
+          setSelectedEntry(allEntries[0]);
+        }
       })
       .catch((error) => {
         console.error("Error fetching entries", error);
@@ -25,8 +28,7 @@ export default function App(props) {
   });
 
   useEffect(() => {
-    updateEntries();
-    setSelectedEntry(allEntries[0]);
+    updateEntries(true);
   }, []);
 
   useEffect(() => {
