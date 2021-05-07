@@ -3,15 +3,13 @@ import Divider from "./Divider";
 import { hero, sidebarContainer, heroEntries } from "../styles/hero";
 
 export default function Sidebar(props) {
-  const { entries, errorMessage, imageKey } = props;
+  const { entries, imageKey } = props;
 
   return (
     <div className={sidebarContainer.className}>
       <div className={heroEntries.className}>
         <h3>Latest Entries</h3>
-        {errorMessage ? (
-          <p>{errorMessage}</p>
-        ) : !entries ? (
+        {!entries ? (
           <p>Loading entries...</p>
         ) : (
           entries.map((entry, index, allEntries) => {

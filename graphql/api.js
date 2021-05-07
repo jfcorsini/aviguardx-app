@@ -20,7 +20,7 @@ function getErrorMessage(error, data) {
 | Learn more about GraphQL: https://graphql.org/learn/
 |--------------------------------------------------
 */
-export const useEntries = () => {
+export const fetchEntries = async () => {
   const query = `query Entries($size: Int) {
     entries(_size: $size) {
       data {
@@ -38,27 +38,24 @@ export const useEntries = () => {
     }
   }`;
   const size = 100;
-  const { data, error } = useFetch(
-    process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
-        "Content-type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        query,
-        variables: { size },
-      }),
-    }
-  );
+  const res = await fetch(process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_FAUNADB_SECRET}`,
+      "Content-type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      query,
+      variables: { size },
+    }),
+  });
 
-  return {
-    data: getData(data),
-    errorMessage: getErrorMessage(error, data),
-    error,
-  };
+  const data = await res.json();
+
+  console.log("FETCH ENTRRIES DATA", data);
+
+  return data;
 };
 
 export const fetchStatus = async () => {

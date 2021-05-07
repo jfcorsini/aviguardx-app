@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useEntries } from "../graphql/api";
+import { useState, useEffect, useCallback } from "react";
+import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
 import { hero, appContainer } from "../styles/hero";
@@ -9,24 +9,45 @@ function getEntries(data) {
 }
 
 export default function App(props) {
-  const { data, errorMessage } = useEntries();
   const [entries, setEntries] = useState([]);
   const [imageKey, setImageKey] = useState("map_url");
   const [selectedEntry, setSelectedEntry] = useState(null);
 
+  const updateEntries = useCallback(() => {
+    fetchEntries()
+      .then((result) => {
+        const allEntries = result.data.entries.data.reverse();
+        setEntries(allEntries);
+        setSelectedEntry(allEntries[0]);
+      })
+      .catch((error) => {
+        console.error("Error fetching entries", error);
+      });
+  });
+
   useEffect(() => {
-    if (!entries.length) {
-      const allEntries = getEntries(data);
-      setEntries(allEntries);
-      setSelectedEntry(allEntries[0]);
-    }
-  }, [data, entries.length]);
+    updateEntries();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      updateEntries();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [fetchEntries]);
+
+  // useEffect(() => {
+  //   if (!entries.length) {
+  //     const allEntries = getEntries(data);
+  //     setEntries(allEntries);
+  //     setSelectedEntry(allEntries[0]);
+  //   }
+  // }, [data, entries.length]);
 
   return (
     <div className={appContainer.className}>
       <Sidebar
         entries={entries}
-        errorMessage={errorMessage}
         selectedEntry={selectedEntry}
         imageKey={imageKey}
         setSelectedEntry={setSelectedEntry}
