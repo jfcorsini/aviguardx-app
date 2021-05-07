@@ -1,5 +1,6 @@
 import {
   guestbookEntry,
+  selectedGuestbookEntry,
   guestbookEntryUserDetail,
   guestbookEntryUserDetailAvatar,
   guestbookEntryUserDetailAvatarImg,
@@ -10,9 +11,10 @@ import {
   guestbookEntryShareTwitterButtonLogo1,
   guestbookEntryShareTwitterButtonLogo2,
 } from "../styles/guestbookentry";
+import Divider from "./Divider";
 
 export default function ItemEntry(props) {
-  const { imageUrl, entry } = props;
+  const { imageUrl, entry, isSelected } = props;
   const { name } = entry;
   const date = new Date(props.entry._ts / 1000);
 
@@ -23,10 +25,17 @@ export default function ItemEntry(props) {
 
   return (
     <>
-      <div className={guestbookEntry.className}>
+      <div
+        className={
+          isSelected
+            ? selectedGuestbookEntry.className
+            : guestbookEntry.className
+        }
+        onClick={handleEntryClick}
+      >
         <div className={guestbookEntryUserDetail.className}>
           <div className={guestbookEntryUserDetailAvatar.className}>
-            <a href={"#"} onClick={handleEntryClick}>
+            <a href={"#"}>
               <img
                 className={guestbookEntryUserDetailAvatarImg.className}
                 src={imageUrl}
@@ -41,7 +50,9 @@ export default function ItemEntry(props) {
           </span>
         </div>
       </div>
+      <Divider />
       {guestbookEntry.styles}
+      {selectedGuestbookEntry.styles}
       {guestbookEntryShare.styles}
       {guestbookEntryShareTwitterButton.styles}
       {guestbookEntryShareTwitterButtonLogo1.styles}

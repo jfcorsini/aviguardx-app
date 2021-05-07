@@ -105,7 +105,6 @@ export const heroEntries = css.resolve`
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 56%;
     max-width: 800px;
     text-align: center;
   }

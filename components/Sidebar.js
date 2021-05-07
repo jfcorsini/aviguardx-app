@@ -1,5 +1,4 @@
 import ItemEntry from "./ItemEntry";
-import Divider from "./Divider";
 import { hero, sidebarContainer, heroEntries } from "../styles/hero";
 
 export default function Sidebar(props) {
@@ -12,16 +11,17 @@ export default function Sidebar(props) {
         {!entries ? (
           <p>Loading entries...</p>
         ) : (
-          entries.map((entry, index, allEntries) => {
+          entries.map((entry) => {
             return (
-              <div key={entry._id}>
-                <ItemEntry
-                  entry={entry}
-                  imageUrl={entry[imageKey]}
-                  setSelectedEntry={props.setSelectedEntry}
-                />
-                {index < allEntries.length - 1 && <Divider />}
-              </div>
+              <ItemEntry
+                key={entry._id}
+                entry={entry}
+                imageUrl={entry[imageKey]}
+                isSelected={
+                  entry._id === (props.selectedEntry && props.selectedEntry._id)
+                }
+                setSelectedEntry={props.setSelectedEntry}
+              />
             );
           })
         )}

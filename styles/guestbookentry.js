@@ -2,7 +2,20 @@ import css from "styled-jsx/css";
 
 export const guestbookEntry = css.resolve`
   div {
+    cursor: pointer;
     width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+`;
+
+export const selectedGuestbookEntry = css.resolve`
+  div {
+    cursor: pointer;
+    width: 100%;
+    background-color: bisque;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
