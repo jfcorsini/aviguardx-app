@@ -18,7 +18,6 @@ export default function App(props) {
       .then((result) => {
         const allEntries = result.data.entries.data.reverse();
         setEntries(allEntries);
-        setSelectedEntry(allEntries[0]);
       })
       .catch((error) => {
         console.error("Error fetching entries", error);
@@ -27,6 +26,7 @@ export default function App(props) {
 
   useEffect(() => {
     updateEntries();
+    setSelectedEntry(allEntries[0]);
   }, []);
 
   useEffect(() => {
@@ -35,14 +35,6 @@ export default function App(props) {
     }, 5000);
     return () => clearInterval(interval);
   }, [fetchEntries]);
-
-  // useEffect(() => {
-  //   if (!entries.length) {
-  //     const allEntries = getEntries(data);
-  //     setEntries(allEntries);
-  //     setSelectedEntry(allEntries[0]);
-  //   }
-  // }, [data, entries.length]);
 
   return (
     <div className={appContainer.className}>
