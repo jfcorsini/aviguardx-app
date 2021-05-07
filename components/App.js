@@ -4,14 +4,39 @@ import Sidebar from "./Sidebar";
 import Content from "./Content";
 import { hero, appContainer } from "../styles/hero";
 
-function getEntries(data) {
-  return data ? data.entries.data.reverse() : [];
-}
-
 export default function App(props) {
   const [entries, setEntries] = useState([]);
   const [imageKey, setImageKey] = useState("map_url");
   const [selectedEntry, setSelectedEntry] = useState(null);
+
+  const handleKeypress = (event) => {
+    if (event.code === "ArrowRight") {
+      moveNext();
+    }
+    if (event.code === "ArrowLeft") {
+      movePreviously();
+    }
+  };
+
+  const moveNext = useCallback(() => {
+    const currentEntryIdx = entries.findIndex(
+      (e) => e._id === selectedEntry._id
+    );
+    const nextIdx = currentEntryIdx + 1;
+    if (entries.length > nextIdx) {
+      setSelectedEntry(entries[nextIdx]);
+    }
+  });
+
+  const movePreviously = useCallback(() => {
+    const currentEntryIdx = entries.findIndex(
+      (e) => e._id === selectedEntry._id
+    );
+    const previousIdx = currentEntryIdx - 1;
+    if (previousIdx >= 0) {
+      setSelectedEntry(entries[previousIdx]);
+    }
+  });
 
   const updateEntries = useCallback((updateSelected = false) => {
     fetchEntries()
@@ -26,6 +51,14 @@ export default function App(props) {
         console.error("Error fetching entries", error);
       });
   });
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeypress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeypress);
+    };
+  }, [handleKeypress]);
 
   useEffect(() => {
     updateEntries(true);
