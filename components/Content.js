@@ -7,7 +7,7 @@ export default function Content(props) {
   const { entry, imageKey, setImageKey } = props;
   return (
     <div className={contentContainer.className}>
-      <Header />
+      <Header onStatusChange={props.onStatusChange} />
       <ImageTypeSelector imageKey={imageKey} setImageKey={setImageKey} />
       {entry && <SelectedEntry entry={entry} imageUrl={entry[imageKey]} />}
       {contentContainer.styles}

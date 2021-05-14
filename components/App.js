@@ -64,12 +64,11 @@ export default function App(props) {
     updateEntries(true);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      updateEntries();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [fetchEntries]);
+  const onStatusChange = useCallback(async (newStatus) => {
+    if (newStatus === "READING") {
+      await updateEntries();
+    }
+  }, []);
 
   return (
     <div className={appContainer.className}>
@@ -80,6 +79,7 @@ export default function App(props) {
         setSelectedEntry={setSelectedEntry}
       />
       <Content
+        onStatusChange={onStatusChange}
         entry={selectedEntry}
         imageKey={imageKey}
         setImageKey={setImageKey}

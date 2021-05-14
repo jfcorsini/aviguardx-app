@@ -25,12 +25,14 @@ const DIFF_MS = 10 * 60 * 1000; // 10 minutes
 
 export default function Header(props) {
   const [status, setStatus] = useState({ status: "CONNECTING" });
+  const { onStatusChange } = props;
 
   useEffect(() => {
     const interval = setInterval(() => {
       fetchStatus()
         .then((result) => {
           setStatus(result.data.status);
+          onStatusChange(result.data.status.status);
         })
         .catch((error) => setStatus({ error }));
     }, 2000);
