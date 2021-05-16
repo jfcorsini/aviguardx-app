@@ -1,31 +1,20 @@
 import { useEffect, useState } from "react";
 import { updateEntry } from "../graphql/api";
-import { entryContainer, entryImg } from "../styles/entry";
-import {
-  heroForm,
-  heroFormFieldset,
-  heroFormTextArea,
-  heroFormTwitterInput,
-  heroFormSubmitButton,
-} from "../styles/hero";
+import EntryPanel from "./EntryPanel";
+import { Tabs, TabList, Tab, TabPanel, TabPanels, Box } from "@chakra-ui/react";
+import UpdateEntryModal from "./UpdateEntryModal";
 
 export default function SelectedEntry(props) {
-  const { entry, imageUrl } = props;
+  const { entry } = props;
   const jsonData = JSON.parse(entry.jsonData);
-  const [name, setName] = useState(entry.name);
   const [comments, setComments] = useState(jsonData.comments || "");
 
   useEffect(() => {
-    setName(entry.name);
     setComments(jsonData.comments || "");
   }, [entry]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (name.trim().length === 0) {
-      alert("Name cannot be empty");
-      return;
-    }
     let newComments = comments;
     if (comments.trim().length === 0) {
       newComments = "";
@@ -35,10 +24,9 @@ export default function SelectedEntry(props) {
       ...jsonData,
       comments: newComments,
     });
-    updateEntry(entry, { name, jsonData: newJsonData })
+    updateEntry(entry, { jsonData: newJsonData })
       .then((newData) => {
-        console.log("Updated data", newData.data.updateEntry);
-        location.reload();
+        props.updateEntry(newData.data.updateEntry);
       })
       .catch((error) => {
         console.error("Failed to update entry", error);
@@ -50,49 +38,35 @@ export default function SelectedEntry(props) {
     setComments(event.target.value);
   }
 
-  function handleNameChange(event) {
-    setName(event.target.value.replace("@", ""));
-  }
-
   return (
-    <div>
-      <img className={entryImg.className} src={imageUrl} />
-      <form className={heroForm.className} onSubmit={handleSubmit}>
-        <fieldset className={heroFormFieldset.className}>
-          <label>Entry name </label>
-          <br />
-          <input
-            className={heroFormTwitterInput.className}
-            type="text"
-            onChange={handleNameChange}
-            value={name}
-          />
-          <br />
-          <br />
-          <label>Comments </label>
-          <textarea
-            className={heroFormTextArea.className}
-            rows="5"
-            cols="50"
-            name="comments"
-            placeholder="Add details about this entry"
-            onChange={handleCommentsChange}
-            value={comments}
-          />
-          <input
-            className={heroFormSubmitButton.className}
-            type="submit"
-            value="Update"
-          />
-        </fieldset>
-      </form>
-      {entryContainer.styles}
-      {entryImg.styles}
-      {heroForm.styles}
-      {heroFormFieldset.styles}
-      {heroFormTextArea.styles}
-      {heroFormTwitterInput.styles}
-      {heroFormSubmitButton.styles}
-    </div>
+    <Box maxWidth="90%">
+      <UpdateEntryModal
+        comments={comments}
+        handleCommentsChange={handleCommentsChange}
+        handleSubmit={handleSubmit}
+      />
+      <Tabs variant="enclosed">
+        <TabList>
+          <Tab>Map</Tab>
+          <Tab>Predicted Image</Tab>
+          <Tab>Tracked Image</Tab>
+          <Tab>Simple Image</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <EntryPanel imageUrl={entry["map_url"]} />
+          </TabPanel>
+          <TabPanel>
+            <EntryPanel imageUrl={entry["predicted_url"]} />
+          </TabPanel>
+          <TabPanel>
+            <EntryPanel imageUrl={entry["tracked_url"]} />
+          </TabPanel>
+          <TabPanel>
+            <EntryPanel imageUrl={entry["simple_tracked_url"]} />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Box>
   );
 }

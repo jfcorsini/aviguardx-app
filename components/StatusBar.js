@@ -1,6 +1,6 @@
+import { Tag, Text } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { fetchStatus } from "../graphql/api";
-import { headerTitle, headerSubTitle } from "../styles/header";
 
 function loadStatus(status) {
   switch (status) {
@@ -23,7 +23,7 @@ function loadStatus(status) {
 
 const DIFF_MS = 10 * 60 * 1000; // 10 minutes
 
-export default function Header(props) {
+export default function StatusBar(props) {
   const [status, setStatus] = useState({ status: "CONNECTING" });
   const { onStatusChange } = props;
 
@@ -51,13 +51,8 @@ export default function Header(props) {
   }
 
   return (
-    <div>
-      <h1 className={headerTitle.className}>AviGuardX</h1>
-      <p className={headerTitle.headerSubTitle}>
-        Status: {loadStatus(readableStatus)}
-      </p>
-      {headerSubTitle.styles}
-      {headerTitle.styles}
-    </div>
+    <Text mb="5px">
+      Status: <Tag> {loadStatus(readableStatus)}</Tag>
+    </Text>
   );
 }

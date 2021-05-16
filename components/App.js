@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
+import { Divider, Flex } from "@chakra-ui/react";
 import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
-import { hero, appContainer } from "../styles/hero";
 
 export default function App(props) {
   const [entries, setEntries] = useState([]);
-  const [imageKey, setImageKey] = useState("map_url");
   const [selectedEntry, setSelectedEntry] = useState(null);
 
   const handleKeypress = (event) => {
@@ -64,6 +63,19 @@ export default function App(props) {
     updateEntries(true);
   }, []);
 
+  const updateEntry = useCallback(
+    (updatedEntry) => {
+      const newEntries = entries.map((e) => {
+        if (e._id === updatedEntry._id) {
+          return updatedEntry;
+        }
+        return e;
+      });
+      setEntries(newEntries);
+    },
+    [entries, setEntries]
+  );
+
   const onStatusChange = useCallback(async (newStatus) => {
     if (newStatus === "READING") {
       await updateEntries();
@@ -71,21 +83,18 @@ export default function App(props) {
   }, []);
 
   return (
-    <div className={appContainer.className}>
+    <Flex height={"100vh"} overflowY="hidden">
       <Sidebar
         entries={entries}
         selectedEntry={selectedEntry}
-        imageKey={imageKey}
         setSelectedEntry={setSelectedEntry}
       />
+      <Divider width="50px" />
       <Content
         onStatusChange={onStatusChange}
         entry={selectedEntry}
-        imageKey={imageKey}
-        setImageKey={setImageKey}
+        updateEntry={updateEntry}
       />
-      {appContainer.styles}
-      {hero.styles}
-    </div>
+    </Flex>
   );
 }

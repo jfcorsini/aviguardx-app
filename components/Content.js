@@ -1,16 +1,22 @@
-import Header from "./Header";
+import StatusBar from "./StatusBar";
 import SelectedEntry from "./SelectedEntry";
-import ImageTypeSelector from "./ImageTypeSelector";
-import { contentContainer } from "../styles/content";
+import { Flex, Heading } from "@chakra-ui/react";
 
 export default function Content(props) {
-  const { entry, imageKey, setImageKey } = props;
+  const { entry, updateEntry } = props;
   return (
-    <div className={contentContainer.className}>
-      <Header onStatusChange={props.onStatusChange} />
-      <ImageTypeSelector imageKey={imageKey} setImageKey={setImageKey} />
-      {entry && <SelectedEntry entry={entry} imageUrl={entry[imageKey]} />}
-      {contentContainer.styles}
-    </div>
+    <Flex direction="column" flex={6}>
+      <Heading
+        as="h1"
+        fontFamily="Bebas Neue"
+        fontWeight="normal"
+        fontSize="7xl"
+      >
+        AviGuardX
+      </Heading>
+      <StatusBar onStatusChange={props.onStatusChange} />
+      <br />
+      {entry && <SelectedEntry entry={entry} updateEntry={updateEntry} />}
+    </Flex>
   );
 }

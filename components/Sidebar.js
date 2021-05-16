@@ -1,22 +1,24 @@
 import ItemEntry from "./ItemEntry";
-import { hero, sidebarContainer, heroEntries } from "../styles/hero";
+import { VStack, Center, Text, Heading } from "@chakra-ui/react";
 
 export default function Sidebar(props) {
-  const { entries, imageKey } = props;
+  const { entries } = props;
+  const loadingEntries = !entries || !entries.length;
 
   return (
-    <div className={sidebarContainer.className}>
-      <div className={heroEntries.className}>
-        <h3>Latest Entries</h3>
-        {!entries ? (
-          <p>Loading entries...</p>
+    <Center height="100vh" overflowY="scroll">
+      <VStack height="100vh" overflowY="auto" overflowX="hidden">
+        <Heading as="h2" size="lg">
+          Latest Entries
+        </Heading>
+        {loadingEntries ? (
+          <Text>Loading entries...</Text>
         ) : (
           entries.map((entry) => {
             return (
               <ItemEntry
                 key={entry._id}
                 entry={entry}
-                imageUrl={entry[imageKey]}
                 isSelected={
                   entry._id === (props.selectedEntry && props.selectedEntry._id)
                 }
@@ -25,10 +27,7 @@ export default function Sidebar(props) {
             );
           })
         )}
-      </div>
-      {heroEntries.styles}
-      {sidebarContainer.styles}
-      {hero.styles}
-    </div>
+      </VStack>
+    </Center>
   );
 }

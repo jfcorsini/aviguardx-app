@@ -9,6 +9,8 @@
     "setup": "node ./scripts/setup.js"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.0.13",
+    "@chakra-ui/react": "^1.6.1",
     "next": "latest",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
