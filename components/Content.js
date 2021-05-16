@@ -27,7 +27,6 @@ export default function Content(props) {
         </Center>
       </Flex>
       <br />
-      <br />
       {entry && <SelectedEntry entry={entry} updateEntry={updateEntry} />}
     </Flex>
   );
