@@ -38,7 +38,11 @@ export default function ItemEntry(props) {
           <Badge borderRadius="full" px="2" colorScheme="teal">
             Drone
           </Badge>
-        ) : null}
+        ) : (
+          <Badge borderRadius="full" px="2" colorScheme="red">
+            Empty
+          </Badge>
+        )}
       </Box>
     </Box>
   );
