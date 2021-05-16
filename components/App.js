@@ -15,15 +15,6 @@ export default function App(props) {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const selectedEntryRef = useRef();
 
-  const handleKeypress = (event) => {
-    if (event.code === "ArrowRight") {
-      moveNext();
-    }
-    if (event.code === "ArrowLeft") {
-      movePreviously();
-    }
-  };
-
   const moveNext = useCallback(() => {
     const currentEntryIdx = entries.findIndex(
       (e) => e._id === selectedEntry._id
@@ -61,14 +52,6 @@ export default function App(props) {
   });
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeypress);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeypress);
-    };
-  }, [handleKeypress]);
-
-  useEffect(() => {
     updateEntries(true);
   }, []);
 
@@ -104,6 +87,8 @@ export default function App(props) {
         onStatusChange={onStatusChange}
         entry={selectedEntry}
         updateEntry={updateEntry}
+        moveNext={moveNext}
+        movePreviously={movePreviously}
       />
     </Flex>
   );
