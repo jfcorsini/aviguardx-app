@@ -1,12 +1,19 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Divider, Flex } from "@chakra-ui/react";
 import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
 
+const scrollOptions = {
+  behavior: "smooth",
+  block: "center",
+  inline: "nearest",
+};
+
 export default function App(props) {
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState(null);
+  const selectedEntryRef = useRef();
 
   const handleKeypress = (event) => {
     if (event.code === "ArrowRight") {
@@ -25,6 +32,7 @@ export default function App(props) {
     if (entries.length > nextIdx) {
       setSelectedEntry(entries[nextIdx]);
     }
+    selectedEntryRef.current.scrollIntoView(scrollOptions);
   });
 
   const movePreviously = useCallback(() => {
@@ -35,6 +43,7 @@ export default function App(props) {
     if (previousIdx >= 0) {
       setSelectedEntry(entries[previousIdx]);
     }
+    selectedEntryRef.current.scrollIntoView(scrollOptions);
   });
 
   const updateEntries = useCallback((updateSelected = false) => {
@@ -88,6 +97,7 @@ export default function App(props) {
         entries={entries}
         selectedEntry={selectedEntry}
         setSelectedEntry={setSelectedEntry}
+        selectedEntryRef={selectedEntryRef}
       />
       <Divider width="50px" />
       <Content

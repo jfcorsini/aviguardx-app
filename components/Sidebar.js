@@ -15,12 +15,15 @@ export default function Sidebar(props) {
           <Text>Loading entries...</Text>
         ) : (
           entries.map((entry) => {
+            const isSelected =
+              entry._id === (props.selectedEntry && props.selectedEntry._id);
             return (
               <ItemEntry
                 key={entry._id}
                 entry={entry}
-                isSelected={
-                  entry._id === (props.selectedEntry && props.selectedEntry._id)
+                isSelected={isSelected}
+                selectedEntryRef={
+                  isSelected ? props.selectedEntryRef : undefined
                 }
                 setSelectedEntry={props.setSelectedEntry}
               />

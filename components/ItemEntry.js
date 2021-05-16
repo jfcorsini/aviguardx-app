@@ -1,7 +1,7 @@
 import { Badge, Box } from "@chakra-ui/react";
 
 export default function ItemEntry(props) {
-  const { entry, isSelected, setSelectedEntry } = props;
+  const { entry, isSelected, setSelectedEntry, selectedEntryRef } = props;
   const date = new Date(entry._ts / 1000);
 
   const hasDrone =
@@ -21,6 +21,7 @@ export default function ItemEntry(props) {
       as="button"
       onClick={handleEntryClick}
       background={isSelected ? "honeydew" : undefined}
+      ref={selectedEntryRef}
     >
       <Box d="flex" alignItems="baseline">
         <Box
