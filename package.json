@@ -12,6 +12,7 @@
     "@chakra-ui/icons": "^1.0.13",
     "@chakra-ui/react": "^1.6.1",
     "@emotion/react": "^11.4.0",
+    "framer-motion": "^4.1.16",
     "next": "latest",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
