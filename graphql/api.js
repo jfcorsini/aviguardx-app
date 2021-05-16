@@ -32,6 +32,7 @@ export const fetchEntries = async () => {
         simple_tracked_url
         tracked_url
         jsonData
+        drone
         recorded_at
       }
       after
@@ -52,8 +53,6 @@ export const fetchEntries = async () => {
   });
 
   const data = await res.json();
-
-  console.log("FETCH ENTRRIES DATA", data);
 
   return data;
 };
@@ -89,7 +88,7 @@ export const fetchStatus = async () => {
 |--------------------------------------------------
 */
 export const createEntry = async (inputData) => {
-  const query = `mutation createEntry($map_url: String!, $tracked_url: String!, $predicted_url: String!, $simple_tracked_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
+  const query = `mutation createEntry($map_url: String!, $tracked_url: String!, $predicted_url: String!, $simple_tracked_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!, $drone: Boolean) {
     createEntry(data: {
       map_url: $map_url,
       tracked_url: $tracked_url,
@@ -97,7 +96,8 @@ export const createEntry = async (inputData) => {
       simple_tracked_url: $simple_tracked_url,
       name: $name,
       recorded_at: $recorded_at,
-      jsonData: $jsonData
+      jsonData: $jsonData,
+      drone: $drone
     }) {
       _id
       _ts
@@ -109,6 +109,7 @@ export const createEntry = async (inputData) => {
       name
       recorded_at
       jsonData
+      drone
     }
   }`;
 
@@ -138,7 +139,7 @@ export const createEntry = async (inputData) => {
 */
 export const updateEntry = async (currentEntry, newEntryState) => {
   const { _id, _ts, ...entry } = currentEntry;
-  const query = `mutation updateEntry($id: ID!, $map_url: String!, $tracked_url: String!, $predicted_url: String!, $simple_tracked_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!) {
+  const query = `mutation updateEntry($id: ID!, $map_url: String!, $tracked_url: String!, $predicted_url: String!, $simple_tracked_url: String!, $name: String!, $recorded_at: Time!, $jsonData: String!, $drone: Boolean) {
     updateEntry(id: $id, data: {
       map_url: $map_url,
       tracked_url: $tracked_url,
@@ -146,7 +147,8 @@ export const updateEntry = async (currentEntry, newEntryState) => {
       simple_tracked_url: $simple_tracked_url,
       name: $name,
       recorded_at: $recorded_at,
-      jsonData: $jsonData
+      jsonData: $jsonData,
+      drone: $drone
     }) {
       _id
       _ts
@@ -158,6 +160,7 @@ export const updateEntry = async (currentEntry, newEntryState) => {
       name
       recorded_at
       jsonData
+      drone
     }
   }`;
 
