@@ -1,13 +1,13 @@
 import StatusBar from "./StatusBar";
 import SelectedEntry from "./SelectedEntry";
-import { Flex, Heading, IconButton, Center, Text } from "@chakra-ui/react";
+import { Flex, Heading, IconButton, Center, Button } from "@chakra-ui/react";
 import {
   ArrowLeftIcon as LeftArrow,
   ArrowRightIcon as RightArrow,
 } from "@chakra-ui/icons";
 
 export default function Content(props) {
-  const { entry, updateEntry, moveNext, movePreviously } = props;
+  const { entry, updateEntry, moveNext, movePreviously, onOpenSidebar } = props;
   return (
     <Flex direction="column" flex={6}>
       <Heading
@@ -22,7 +22,7 @@ export default function Content(props) {
       <Flex>
         <Center>
           <IconButton onClick={movePreviously} icon={<LeftArrow />} size="md" />
-          <Text>Change entry</Text>
+          <Button onClick={onOpenSidebar}>Show entries</Button>
           <IconButton onClick={moveNext} icon={<RightArrow />} size="md" />
         </Center>
       </Flex>

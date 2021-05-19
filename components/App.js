@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Divider, Flex } from "@chakra-ui/react";
+import { Divider, Flex, useDisclosure } from "@chakra-ui/react";
 import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
@@ -14,6 +14,7 @@ export default function App(props) {
   const [entries, setEntries] = useState([]);
   const [selectedEntry, setSelectedEntry] = useState(null);
   const selectedEntryRef = useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const moveNext = useCallback(() => {
     const currentEntryIdx = entries.findIndex(
@@ -23,7 +24,9 @@ export default function App(props) {
     if (entries.length > nextIdx) {
       setSelectedEntry(entries[nextIdx]);
     }
-    selectedEntryRef.current.scrollIntoView(scrollOptions);
+    if (isOpen) {
+      selectedEntryRef.current.scrollIntoView(scrollOptions);
+    }
   });
 
   const movePreviously = useCallback(() => {
@@ -34,7 +37,9 @@ export default function App(props) {
     if (previousIdx >= 0) {
       setSelectedEntry(entries[previousIdx]);
     }
-    selectedEntryRef.current.scrollIntoView(scrollOptions);
+    if (isOpen) {
+      selectedEntryRef.current.scrollIntoView(scrollOptions);
+    }
   });
 
   const updateEntries = useCallback((updateSelected = false) => {
@@ -81,6 +86,8 @@ export default function App(props) {
         selectedEntry={selectedEntry}
         setSelectedEntry={setSelectedEntry}
         selectedEntryRef={selectedEntryRef}
+        isOpen={isOpen}
+        onClose={onClose}
       />
       <Divider width="50px" />
       <Content
@@ -89,6 +96,7 @@ export default function App(props) {
         updateEntry={updateEntry}
         moveNext={moveNext}
         movePreviously={movePreviously}
+        onOpenSidebar={onOpen}
       />
     </Flex>
   );
