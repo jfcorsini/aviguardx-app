@@ -46,7 +46,7 @@ export default function SelectedEntry(props) {
         handleCommentsChange={handleCommentsChange}
         handleSubmit={handleSubmit}
       />
-      <Tabs isLazy variant="enclosed">
+      <Tabs variant="enclosed">
         <TabList>
           <Tab>Map</Tab>
           <Tab>Tracked Image</Tab>
