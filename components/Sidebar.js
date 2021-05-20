@@ -29,8 +29,8 @@ export default function Sidebar(props) {
             </Heading>
           </DrawerHeader>
           <DrawerBody>
-            <Center height="100vh" overflowY="scroll">
-              <VStack height="100vh" overflowY="auto" overflowX="hidden">
+            <Center>
+              <VStack>
                 {loadingEntries ? (
                   <Text>Loading entries...</Text>
                 ) : (
