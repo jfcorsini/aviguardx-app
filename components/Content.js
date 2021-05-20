@@ -16,7 +16,13 @@ import {
 export default function Content(props) {
   const { entry, updateEntry, moveNext, movePreviously, onOpenSidebar } = props;
   return (
-    <Flex direction="column" ml="20px" height="100vh" overflowY="hidden">
+    <Flex
+      direction="column"
+      gridGap="10px"
+      ml="20px"
+      height="100vh"
+      overflowY="hidden"
+    >
       <Box>
         <Heading
           as="h1"

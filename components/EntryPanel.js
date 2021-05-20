@@ -5,7 +5,7 @@ export default function SelectedEntry(props) {
 
   return (
     <Box>
-      <Image maxHeight="calc(100vh - 220px)" src={imageUrl} loading="eager" />
+      <Image maxHeight="calc(100vh - 200px)" src={imageUrl} loading="eager" />
     </Box>
   );
 }

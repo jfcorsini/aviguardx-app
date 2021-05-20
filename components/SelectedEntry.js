@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { updateEntry } from "../graphql/api";
 import EntryPanel from "./EntryPanel";
-import { Tabs, TabList, Tab, TabPanel, TabPanels } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanel, TabPanels, Box } from "@chakra-ui/react";
 import UpdateEntryModal from "./UpdateEntryModal";
 
 export default function SelectedEntry(props) {
@@ -39,8 +39,9 @@ export default function SelectedEntry(props) {
   }
 
   return (
-    <>
+    <Box position="relative">
       <UpdateEntryModal
+        entry={entry}
         comments={comments}
         handleCommentsChange={handleCommentsChange}
         handleSubmit={handleSubmit}
@@ -63,6 +64,6 @@ export default function SelectedEntry(props) {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </>
+    </Box>
   );
 }
