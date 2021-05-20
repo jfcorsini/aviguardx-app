@@ -16,7 +16,7 @@ import {
 export default function Content(props) {
   const { entry, updateEntry, moveNext, movePreviously, onOpenSidebar } = props;
   return (
-    <Flex direction="column" ml="20px" height="100vh">
+    <Flex direction="column" ml="20px" height="100vh" overflowY="hidden">
       <Box>
         <Heading
           as="h1"
@@ -40,7 +40,7 @@ export default function Content(props) {
         </Flex>
       </Box>
       {entry && (
-        <Box maxHeight="100%" flex={1}>
+        <Box flex={1}>
           <SelectedEntry entry={entry} updateEntry={updateEntry} />
         </Box>
       )}

@@ -45,24 +45,24 @@ export default function SelectedEntry(props) {
         handleCommentsChange={handleCommentsChange}
         handleSubmit={handleSubmit}
       />
-      <Tabs variant="enclosed" maxHeight="100%">
+      <Tabs variant="enclosed">
         <TabList>
           <Tab>Map</Tab>
           <Tab>Predicted Image</Tab>
           <Tab>Tracked Image</Tab>
           <Tab>Simple Image</Tab>
         </TabList>
-        <TabPanels maxHeight="100%">
-          <TabPanel maxHeight="100%">
+        <TabPanels>
+          <TabPanel>
             <EntryPanel imageUrl={entry["map_url"]} />
           </TabPanel>
-          <TabPanel maxHeight="100%">
+          <TabPanel>
             <EntryPanel imageUrl={entry["predicted_url"]} />
           </TabPanel>
-          <TabPanel maxHeight="100%">
+          <TabPanel>
             <EntryPanel imageUrl={entry["tracked_url"]} />
           </TabPanel>
-          <TabPanel maxHeight="100%">
+          <TabPanel>
             <EntryPanel imageUrl={entry["simple_tracked_url"]} />
           </TabPanel>
         </TabPanels>
