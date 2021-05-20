@@ -15,6 +15,12 @@ export default function App(props) {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const selectedEntryRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const onOpenSidebar = () => {
+    onOpen();
+    setTimeout(() => {
+      selectedEntryRef.current.scrollIntoView(scrollOptions);
+    }, 10);
+  };
 
   const moveNext = useCallback(() => {
     const currentEntryIdx = entries.findIndex(
@@ -96,7 +102,7 @@ export default function App(props) {
         updateEntry={updateEntry}
         moveNext={moveNext}
         movePreviously={movePreviously}
-        onOpenSidebar={onOpen}
+        onOpenSidebar={onOpenSidebar}
       />
     </Flex>
   );
