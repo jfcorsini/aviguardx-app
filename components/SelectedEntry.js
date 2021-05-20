@@ -48,22 +48,18 @@ export default function SelectedEntry(props) {
       <Tabs variant="enclosed">
         <TabList>
           <Tab>Map</Tab>
-          <Tab>Predicted Image</Tab>
           <Tab>Tracked Image</Tab>
-          <Tab>Simple Image</Tab>
+          <Tab>Predicted Image</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
             <EntryPanel imageUrl={entry["map_url"]} />
           </TabPanel>
           <TabPanel>
-            <EntryPanel imageUrl={entry["predicted_url"]} />
-          </TabPanel>
-          <TabPanel>
             <EntryPanel imageUrl={entry["tracked_url"]} />
           </TabPanel>
           <TabPanel>
-            <EntryPanel imageUrl={entry["simple_tracked_url"]} />
+            <EntryPanel imageUrl={entry["predicted_url"]} />
           </TabPanel>
         </TabPanels>
       </Tabs>
