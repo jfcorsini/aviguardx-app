@@ -28,7 +28,9 @@ export default function Content(props) {
           as="h1"
           fontFamily="Bebas Neue"
           fontWeight="normal"
-          fontSize="7xl"
+          fontSize="8xl"
+          letterSpacing="wider"
+          mb="-5px"
         >
           AviGuardX
         </Heading>
