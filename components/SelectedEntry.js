@@ -53,13 +53,13 @@ export default function SelectedEntry(props) {
           <Tab>Predicted Image</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>
+          <TabPanel padding="0" paddingTop="2">
             <EntryPanel imageUrl={entry["map_url"]} />
           </TabPanel>
-          <TabPanel>
+          <TabPanel padding="0" paddingTop="2">
             <EntryPanel imageUrl={entry["tracked_url"]} />
           </TabPanel>
-          <TabPanel>
+          <TabPanel padding="0" paddingTop="2">
             <EntryPanel imageUrl={entry["predicted_url"]} />
           </TabPanel>
         </TabPanels>
