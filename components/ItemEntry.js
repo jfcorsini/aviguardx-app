@@ -2,7 +2,9 @@ import { Badge, Box } from "@chakra-ui/react";
 
 export default function ItemEntry(props) {
   const { entry, isSelected, setSelectedEntry, selectedEntryRef } = props;
-  const date = new Date(entry._ts / 1000);
+  const wrongDate = new Date(entry.recorded_at);
+  // Recorded date is being sent wrong by the backend :(
+  const date = new Date(wrongDate.getTime() - 3 * 60 * 60 * 1000);
 
   const hasDrone =
     entry.drone !== undefined ? entry.drone : Math.random() < 0.7;
