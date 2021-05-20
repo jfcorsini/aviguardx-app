@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/router";
 import { Flex, useDisclosure } from "@chakra-ui/react";
 import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
@@ -11,8 +12,9 @@ const scrollOptions = {
 };
 
 export default function App(props) {
+  const router = useRouter();
   const [entries, setEntries] = useState([]);
-  const [selectedEntry, setSelectedEntry] = useState(null);
+  const [selectedEntry, setSelectedEntryVar] = useState(null);
   const selectedEntryRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const onOpenSidebar = () => {
@@ -21,6 +23,27 @@ export default function App(props) {
       selectedEntryRef.current.scrollIntoView(scrollOptions);
     }, 10);
   };
+
+  const routerId = router.query.id;
+  const isLoadingQueryId = router.asPath.startsWith("/?id=") && !routerId;
+
+  const setSelectedEntry = useCallback(
+    (e) => {
+      if (isLoadingQueryId) {
+        return;
+      }
+      setSelectedEntryVar(e);
+      router.push(
+        {
+          pathname: "/",
+          query: { id: e._id },
+        },
+        undefined,
+        { shallow: true }
+      );
+    },
+    [setSelectedEntryVar, isLoadingQueryId]
+  );
 
   const moveNext = useCallback(() => {
     const currentEntryIdx = entries.findIndex(
@@ -48,23 +71,34 @@ export default function App(props) {
     }
   });
 
-  const updateEntries = useCallback((updateSelected = false) => {
-    fetchEntries()
-      .then((result) => {
-        const allEntries = result.data.entries.data.reverse();
-        setEntries(allEntries);
-        if (updateSelected) {
-          setSelectedEntry(allEntries[0]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching entries", error);
-      });
-  });
+  const updateEntries = useCallback(
+    (updateSelected = false) => {
+      fetchEntries()
+        .then((result) => {
+          const allEntries = result.data.entries.data.reverse();
+          setEntries(allEntries);
+          if (updateSelected) {
+            if (routerId && !isLoadingQueryId) {
+              const routerEntry = allEntries.find((e) => e._id === routerId);
+              if (routerEntry) {
+                setSelectedEntry(routerEntry);
+                return;
+              }
+            }
+
+            setSelectedEntry(allEntries[0]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching entries", error);
+        });
+    },
+    [fetchEntries, setEntries, setSelectedEntry, isLoadingQueryId]
+  );
 
   useEffect(() => {
     updateEntries(true);
-  }, []);
+  }, [isLoadingQueryId]);
 
   const updateEntry = useCallback(
     (updatedEntry) => {
