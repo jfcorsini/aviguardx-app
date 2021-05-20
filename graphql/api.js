@@ -1,5 +1,3 @@
-import useFetch from "../lib/useFetch";
-
 function getData(data) {
   if (!data || data.errors) return null;
   return data.data;
