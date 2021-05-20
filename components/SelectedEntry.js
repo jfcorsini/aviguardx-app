@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { updateEntry } from "../graphql/api";
 import EntryPanel from "./EntryPanel";
-import { Tabs, TabList, Tab, TabPanel, TabPanels, Box } from "@chakra-ui/react";
+import { Tabs, TabList, Tab, TabPanel, TabPanels } from "@chakra-ui/react";
 import UpdateEntryModal from "./UpdateEntryModal";
 
 export default function SelectedEntry(props) {
@@ -39,34 +39,34 @@ export default function SelectedEntry(props) {
   }
 
   return (
-    <Box maxWidth="90%">
+    <>
       <UpdateEntryModal
         comments={comments}
         handleCommentsChange={handleCommentsChange}
         handleSubmit={handleSubmit}
       />
-      <Tabs variant="enclosed">
+      <Tabs variant="enclosed" maxHeight="100%">
         <TabList>
           <Tab>Map</Tab>
           <Tab>Predicted Image</Tab>
           <Tab>Tracked Image</Tab>
           <Tab>Simple Image</Tab>
         </TabList>
-        <TabPanels>
-          <TabPanel>
+        <TabPanels maxHeight="100%">
+          <TabPanel maxHeight="100%">
             <EntryPanel imageUrl={entry["map_url"]} />
           </TabPanel>
-          <TabPanel>
+          <TabPanel maxHeight="100%">
             <EntryPanel imageUrl={entry["predicted_url"]} />
           </TabPanel>
-          <TabPanel>
+          <TabPanel maxHeight="100%">
             <EntryPanel imageUrl={entry["tracked_url"]} />
           </TabPanel>
-          <TabPanel>
+          <TabPanel maxHeight="100%">
             <EntryPanel imageUrl={entry["simple_tracked_url"]} />
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Box>
+    </>
   );
 }

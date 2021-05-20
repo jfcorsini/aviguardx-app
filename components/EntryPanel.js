@@ -4,8 +4,8 @@ export default function SelectedEntry(props) {
   const { imageUrl } = props;
 
   return (
-    <Box>
-      <Image src={imageUrl} htmlWidth="" loading="eager" />
+    <Box maxHeight="100%">
+      <Image maxHeight="100%" src={imageUrl} loading="eager" />
     </Box>
   );
 }

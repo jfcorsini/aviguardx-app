@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Divider, Flex, useDisclosure } from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
@@ -86,7 +86,7 @@ export default function App(props) {
   }, []);
 
   return (
-    <Flex height={"100vh"} overflowY="hidden">
+    <Flex height={"100vh"}>
       <Sidebar
         entries={entries}
         selectedEntry={selectedEntry}
@@ -95,7 +95,6 @@ export default function App(props) {
         isOpen={isOpen}
         onClose={onClose}
       />
-      <Divider width="50px" />
       <Content
         onStatusChange={onStatusChange}
         entry={selectedEntry}
