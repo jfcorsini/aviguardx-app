@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
-import { Flex, useDisclosure } from "@chakra-ui/react";
+import { Center, Flex, useDisclosure } from "@chakra-ui/react";
 import { fetchEntries } from "../graphql/api";
 import Sidebar from "./Sidebar";
 import Content from "./Content";
@@ -120,23 +120,25 @@ export default function App(props) {
   }, []);
 
   return (
-    <Flex height={"100vh"}>
-      <Sidebar
-        entries={entries}
-        selectedEntry={selectedEntry}
-        setSelectedEntry={setSelectedEntry}
-        selectedEntryRef={selectedEntryRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
-      <Content
-        onStatusChange={onStatusChange}
-        entry={selectedEntry}
-        updateEntry={updateEntry}
-        moveNext={moveNext}
-        movePreviously={movePreviously}
-        onOpenSidebar={onOpenSidebar}
-      />
-    </Flex>
+    <Center>
+      <Flex height={"100vh"}>
+        <Sidebar
+          entries={entries}
+          selectedEntry={selectedEntry}
+          setSelectedEntry={setSelectedEntry}
+          selectedEntryRef={selectedEntryRef}
+          isOpen={isOpen}
+          onClose={onClose}
+        />
+        <Content
+          onStatusChange={onStatusChange}
+          entry={selectedEntry}
+          updateEntry={updateEntry}
+          moveNext={moveNext}
+          movePreviously={movePreviously}
+          onOpenSidebar={onOpenSidebar}
+        />
+      </Flex>
+    </Center>
   );
 }
