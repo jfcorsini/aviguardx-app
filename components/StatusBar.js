@@ -51,8 +51,8 @@ export default function StatusBar(props) {
   }
 
   return (
-    <Text mb="5px">
-      Status: <Tag> {loadStatus(readableStatus)}</Tag>
-    </Text>
+    <Tag colorScheme="blue" fontSize="xl">
+      {loadStatus(readableStatus)}
+    </Tag>
   );
 }

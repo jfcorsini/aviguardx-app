@@ -26,9 +26,8 @@ export default function Content(props) {
         >
           AviGuardX
         </Heading>
-        <Flex>
+        <Flex flexDirection="row" justifyContent="space-between">
           <Center gridGap="2">
-            <StatusBar onStatusChange={props.onStatusChange} />
             <IconButton
               onClick={movePreviously}
               icon={<LeftArrow />}
@@ -37,6 +36,7 @@ export default function Content(props) {
             <Button onClick={onOpenSidebar}>Show entries</Button>
             <IconButton onClick={moveNext} icon={<RightArrow />} size="md" />
           </Center>
+          <StatusBar onStatusChange={props.onStatusChange} />
         </Flex>
       </Box>
       {entry && (
