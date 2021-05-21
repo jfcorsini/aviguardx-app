@@ -36,7 +36,7 @@ export const fetchEntries = async () => {
       after
     }
   }`;
-  const size = 500;
+  const size = 1000;
   const res = await fetch(process.env.NEXT_PUBLIC_FAUNADB_GRAPHQL_ENDPOINT, {
     method: "POST",
     headers: {
