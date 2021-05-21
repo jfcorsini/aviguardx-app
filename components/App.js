@@ -134,8 +134,8 @@ export default function App(props) {
           onStatusChange={onStatusChange}
           entry={selectedEntry}
           updateEntry={updateEntry}
-          moveNext={moveNext}
-          movePreviously={movePreviously}
+          moveNext={movePreviously}
+          movePreviously={moveNext}
           onOpenSidebar={onOpenSidebar}
         />
       </Flex>
